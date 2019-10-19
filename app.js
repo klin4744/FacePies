@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const OpenTok = require('opentok');
 const { apiKey, projectSecret } = require('./secrets');
-const axios = require('axios');
 const path = require('path');
 let opentok = new OpenTok(apiKey, projectSecret);
 let setTime = new Date().getTime();
@@ -28,16 +27,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(() => {
-   if (!sessionId) {
-      createSession();
-   }
-   if (!token.length || new Date().getTime() - setTime <= 0) {
-      createToken();
-      setTime = new Date().getTime() / 1000 + 7 * 24 * 60 * 60;
-   }
-   opentok.startArchive();
-});
+// app.use(() => {
+//    if (!sessionId) {
+//       createSession();
+//    }
+//    if (!token.length || new Date().getTime() - setTime <= 0) {
+//       createToken();
+//       setTime = new Date().getTime() / 1000 + 7 * 24 * 60 * 60;
+//    }
+//    opentok.startArchive();
+// });
 app.get('/', (req, res, next) => {
    res.sendFile(path.join(__dirname, '../public/index.html'));
    res.send(error.message);
