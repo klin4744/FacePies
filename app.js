@@ -4,20 +4,24 @@ const axios = require('axios');
 const cors = require('cors');
 const path = require('path');
 
-app.use(cors);
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors);
 
-app.get('*', (req, res, next) => {
+app.get('/', (req, res, next) => {
    try {
-      console.log(path.join(__dirname, 'public', 'index.html'));
-      res.sendFile(path.join(__dirname, 'public', 'index.html'));
+      // console.log(path.join(__dirname, 'public', 'index.html'));
+      res.sendFile(path.join(__dirname, '../public/index.html'));
    } catch (error) {
       res.send(error.message);
    }
 });
+app.get('/lol', (req, res, next) => {
+   res.send('it works');
+});
 
-app.listen(8000, (req, res, next) => {
-   console.log('WOW!');
+const PORT = 8000 || process.env.port;
+app.listen(PORT, (req, res, next) => {
+   console.log('Server is running on port ' + PORT);
 });
